@@ -8,18 +8,37 @@ const JsonTree = ({ data }) => {
       const nodes = [];
       const edges = [];
 
-      Object.entries(obj || {}).forEach(([key, value], index) => {
+      const entries = Array.isArray(obj)
+        ? obj.map((v, i) => [i, v])
+        : Object.entries(obj || {});
+
+      entries.forEach(([key, value], index) => {
         const nodeId = `${parentId ? parentId + "-" : ""}${key}-${index}`;
+
+        const isObject =
+          typeof value === "object" && value !== null && !Array.isArray(value);
+        const isArray = Array.isArray(value);
+        const isPrimitive = !isObject && !isArray;
+
+        const backgroundColor = isObject
+          ? "#7B68EE"
+          : isArray
+          ? "#2ECC71"
+          : "#FFA500";
+
+        const label = isPrimitive ? `${key}: ${String(value)}` : `${key}`;
+
         nodes.push({
           id: nodeId,
-          data: { label: `${key}: ${typeof value === "object" ? "" : value}` },
-          position: { x: level * 200, y: index * 100 },
+          data: { label },
+          position: { x: level * 250, y: index * 100 },
           style: {
-            background: "#FFB347",
-            color: "black",
+            background: backgroundColor,
+            color: "white",
             border: "2px solid #333",
             borderRadius: "8px",
-            padding: "5px 10px",
+            padding: "6px 10px",
+            fontSize: "14px",
           },
         });
 
@@ -28,10 +47,11 @@ const JsonTree = ({ data }) => {
             id: `${parentId}-${nodeId}`,
             source: parentId,
             target: nodeId,
+            animated: true,
           });
         }
 
-        if (typeof value === "object" && value !== null) {
+        if (isObject || isArray) {
           const { nodes: childNodes, edges: childEdges } = generateFlowElements(
             value,
             nodeId,
@@ -57,18 +77,26 @@ const JsonTree = ({ data }) => {
     data: { label: "root" },
     position: { x: 0, y: 0 },
     style: {
-      background: "#FF851B",
+      background: "#1E90FF",
       color: "white",
       border: "2px solid #333",
       borderRadius: "8px",
-      padding: "5px 10px",
+      padding: "6px 10px",
+      fontWeight: "bold",
     },
   });
 
   return (
     <div style={{ height: "80vh", width: "100%" }}>
       <ReactFlow nodes={nodes} edges={edges} fitView>
-        <MiniMap />
+        <MiniMap
+          nodeColor={(n) => {
+            if (n.style?.background === "#7B68EE") return "#7B68EE";
+            if (n.style?.background === "#2ECC71") return "#2ECC71";
+            if (n.style?.background === "#FFA500") return "#FFA500";
+            return "#1E90FF";
+          }}
+        />
         <Controls />
         <Background gap={16} color="#aaa" />
       </ReactFlow>
