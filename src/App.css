@@ -40,3 +40,119 @@
 .read-the-docs {
   color: #888;
 }
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: #f9fafb;
+  font-family: Arial, sans-serif;
+}
+
+/* Title */
+.app-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #1e293b;
+}
+
+/* Flexbox for input + output */
+.json-flex-container {
+  display: flex;
+  flex: 1;
+  gap: 16px;
+  height: 100%;
+}
+
+/* Input section */
+.input-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+/* Output section */
+.output-section {
+  flex: 1;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  padding: 12px;
+  overflow: auto;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* JSON text */
+.json-output {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: monospace;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+/* Placeholder */
+.placeholder-text {
+  color: #64748b;
+  font-style: italic;
+  text-align: center;
+  margin-top: 50%;
+}
+/* Middle button section */
+.button-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visualize-center-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  height: fit-content;
+}
+
+.visualize-center-btn:hover {
+  background-color: #2563eb;
+}
+
+.visualize-center-btn:active {
+  background-color: #1e40af;
+}
+
+/* Make input & output equal width */
+.input-section,
+.output-section {
+  flex: 1;
+}
+
+.json-textarea {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.json-textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
