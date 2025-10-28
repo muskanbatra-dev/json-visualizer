@@ -1,5 +1,5 @@
 import React from "react";
-import "./JsonInput.css"; // make sure this file contains your CSS
+import "./JsonInput.css"; 
 
 const JsonInput = ({ jsonText, setJsonText, onVisualize }) => {
   return (

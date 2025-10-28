@@ -1,0 +1,27 @@
+.json-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.json-textarea {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.json-textarea:focus {
+  border-color: #3b82f6; /* blue */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
