@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@xyflow/react": "^12.9.0",
+    "@reduxjs/toolkit": "^2.9.2",
+    "jsonpath-plus": "^10.3.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-redux": "^9.2.0",
     "react-toastify": "^11.0.5",
     "reactflow": "^11.11.4"
   },

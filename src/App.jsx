@@ -1,27 +1,30 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setJsonData } from "./Store/jsonSlice";
 import JsonInput from "./components/JsonInput/JsonInput";
 import JsonTree from "./components/JsonTree/JsonTree";
-import "./App.css";
+import SearchBar from "./components/JsonSearchBar/JsonSearchBar";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 const App = () => {
-  const [jsonData, setJsonData] = useState(null);
+  const dispatch = useDispatch();
+  const { data, searchMessage } = useSelector((state) => state.json);
+
   const [jsonText, setJsonText] = useState("");
   const [showTree, setShowTree] = useState(false);
 
   const handleValidateJson = () => {
     try {
       const parsed = JSON.parse(jsonText);
-      setJsonData(parsed);
+      dispatch(setJsonData(parsed));
       setShowTree(false);
       toast.success("✅ Valid JSON! Visualization ready.", {
         position: "top-right",
         autoClose: 2000,
       });
     } catch (err) {
-      setJsonData(null);
-      setShowTree(false);
       toast.error(`⚠️ Invalid JSON: ${err.message}`, {
         position: "top-right",
         autoClose: 4000,
@@ -29,10 +32,9 @@ const App = () => {
     }
   };
 
-  // ✅ Show React Flow tree when button clicked
   const handleShowTree = () => {
-    if (jsonData) {
-      setShowTree((prev) => !prev); // toggle state
+    if (data) {
+      setShowTree((prev) => !prev);
       toast.info(
         showTree
           ? "🌿 Visualization hidden!"
@@ -42,6 +44,8 @@ const App = () => {
           autoClose: 2000,
         }
       );
+    } else {
+      toast.warning("⚠️ Please validate JSON first!");
     }
   };
 
@@ -49,23 +53,27 @@ const App = () => {
     <div className="app-container">
       <h1 className="app-title">JSON Tree Visualizer</h1>
 
+      {/* 🔍 Search Bar (Redux integrated) */}
+      <SearchBar />
+
       <div className="json-flex-container">
+        {/* 📝 Input Section */}
         <div className="input-section">
           <JsonInput jsonText={jsonText} setJsonText={setJsonText} />
         </div>
 
+        {/* ✅ Validate JSON */}
         <div className="button-section">
           <button className="visualize-center-btn" onClick={handleValidateJson}>
             Validate JSON →
           </button>
         </div>
 
+        {/* 🧾 Output Section */}
         <div className="output-section">
-          {jsonData ? (
+          {data ? (
             <>
-              <pre className="json-output">
-                {JSON.stringify(jsonData, null, 2)}
-              </pre>
+              <pre className="json-output">{JSON.stringify(data, null, 2)}</pre>
               <button
                 className="show-tree-btn"
                 onClick={handleShowTree}
@@ -92,10 +100,18 @@ const App = () => {
         </div>
       </div>
 
-      {showTree && jsonData && (
+      {/* 🌳 React Flow Tree */}
+      {showTree && data && (
         <div className="tree-section">
-          <JsonTree data={jsonData} />
+          <JsonTree data={data} />
         </div>
+      )}
+
+      {/* ✅ Redux Search Feedback */}
+      {searchMessage && (
+        <p style={{ textAlign: "center", marginTop: "10px" }}>
+          {searchMessage}
+        </p>
       )}
 
       <ToastContainer />
