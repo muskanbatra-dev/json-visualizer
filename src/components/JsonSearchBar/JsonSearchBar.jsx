@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSearchPath,
   searchJsonPath,
   clearSearch,
 } from "../../Store/jsonSlice";
+import { toast } from "react-toastify";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -16,14 +17,19 @@ const SearchBar = () => {
 
   const handleSearch = () => {
     if (!jsonData) {
-      alert("⚠️ Please load valid JSON before searching!");
+      toast.warn("⚠️ Please load valid JSON before searching!", {
+        position: "top-right",
+      });
       return;
     }
 
     if (!localQuery.trim()) {
-      alert("⚠️ Please enter a valid JSONPath query!");
+      toast.warn("⚠️ Please enter a valid JSONPath query!", {
+        position: "top-right",
+      });
       return;
     }
+
     dispatch(setSearchPath(localQuery.trim()));
     dispatch(searchJsonPath());
   };
@@ -31,7 +37,21 @@ const SearchBar = () => {
   const handleClear = () => {
     setLocalQuery("");
     dispatch(clearSearch());
+    toast.info("Search cleared.", { position: "top-right" });
   };
+
+  // 🔔 Show toast when searchMessage changes
+  useEffect(() => {
+    if (!searchMessage) return;
+
+    if (searchMessage.includes("✅")) {
+      toast.success(searchMessage, { position: "top-right" });
+    } else if (searchMessage.includes("❌")) {
+      toast.error(searchMessage, { position: "top-right" });
+    } else if (searchMessage.includes("⚠️")) {
+      toast.warn(searchMessage, { position: "top-right" });
+    }
+  }, [searchMessage]);
 
   return (
     <div
@@ -45,7 +65,7 @@ const SearchBar = () => {
       <input
         value={localQuery}
         onChange={(e) => setLocalQuery(e.target.value)}
-        placeholder={`Enter JSONPath, e.g. $.user.address.city`}
+        placeholder="Enter JSONPath, e.g. $.user.address.city"
         style={{
           flex: 1,
           padding: "8px 10px",
@@ -79,21 +99,6 @@ const SearchBar = () => {
       >
         Clear
       </button>
-      {searchMessage && (
-        <span
-          style={{
-            marginLeft: 10,
-            fontWeight: "bold",
-            color: searchMessage.includes("✅")
-              ? "green"
-              : searchMessage.includes("❌")
-              ? "red"
-              : "orange",
-          }}
-        >
-          {searchMessage}
-        </span>
-      )}
     </div>
   );
 };
