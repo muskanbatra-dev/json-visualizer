@@ -40,7 +40,7 @@ const SearchBar = () => {
     toast.info("Search cleared.", { position: "top-right" });
   };
 
-  // 🔔 Show toast when searchMessage changes
+ 
   useEffect(() => {
     if (!searchMessage) return;
 

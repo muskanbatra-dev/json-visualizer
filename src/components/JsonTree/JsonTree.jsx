@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useEffect, useRef } from "react";
+import React, {
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -8,6 +14,7 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const normalizePathToId = (p) =>
   "root-" +
@@ -21,6 +28,7 @@ const JsonTreeInner = ({ data }) => {
   const reactFlowInstanceRef = useRef(null);
   const { setCenter } = useReactFlow();
   const matchedNodeIds = useSelector((s) => s.json.matchedNodeIds || []);
+  const [hoveredNode, setHoveredNode] = useState(null);
 
   const generateFlowElements = useCallback(
     (obj, parentId = null, level = 0, parentPath = "$") => {
@@ -32,7 +40,6 @@ const JsonTreeInner = ({ data }) => {
         : Object.entries(obj || {});
 
       entries.forEach(([key, value], index) => {
-        // build path: if parent is array (key is index number), use [i], else .key
         const isArrayParent = Array.isArray(obj);
         const currentPath = isArrayParent
           ? `${parentPath}[${key}]`
@@ -63,6 +70,7 @@ const JsonTreeInner = ({ data }) => {
             borderRadius: "8px",
             padding: "6px 10px",
             fontSize: "14px",
+            cursor: "pointer",
           },
         });
 
@@ -107,6 +115,7 @@ const JsonTreeInner = ({ data }) => {
         borderRadius: "8px",
         padding: "6px 10px",
         fontWeight: "bold",
+        cursor: "pointer",
       },
     };
 
@@ -123,7 +132,7 @@ const JsonTreeInner = ({ data }) => {
     };
   }, [data, generateFlowElements]);
 
-  // merge highlight style if node id is matched
+
   const nodesWithHighlight = useMemo(() => {
     if (!matchedNodeIds || matchedNodeIds.length === 0) return nodes;
 
@@ -145,6 +154,7 @@ const JsonTreeInner = ({ data }) => {
     });
   }, [nodes, matchedNodeIds]);
 
+ 
   useEffect(() => {
     if (!matchedNodeIds || matchedNodeIds.length === 0) return;
     const firstId = matchedNodeIds[0];
@@ -157,9 +167,23 @@ const JsonTreeInner = ({ data }) => {
     }
   }, [matchedNodeIds, nodes, setCenter]);
 
+ 
+  const handleNodeClick = (_, node) => {
+    if (!node?.data?.path) return;
+    navigator.clipboard.writeText(node.data.path);
+    toast.success(`Copied path: ${node.data.path}`);
+  };
+
   return (
-    <div style={{ height: "80vh", width: "100%" }}>
-      <ReactFlow nodes={nodesWithHighlight} edges={edges} fitView>
+    <div style={{ height: "80vh", width: "100%", position: "relative" }}>
+      <ReactFlow
+        nodes={nodesWithHighlight}
+        edges={edges}
+        fitView
+        onNodeClick={handleNodeClick}
+        onNodeMouseEnter={(_, node) => setHoveredNode(node.data)}
+        onNodeMouseLeave={() => setHoveredNode(null)}
+      >
         <MiniMap
           nodeColor={(n) => {
             if (n.style?.background === "#7B68EE") return "#7B68EE";
@@ -171,16 +195,39 @@ const JsonTreeInner = ({ data }) => {
         <Controls />
         <Background gap={16} color="#aaa" />
       </ReactFlow>
+
+   
+      {hoveredNode && (
+        <div
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            background: "rgba(0,0,0,0.8)",
+            color: "white",
+            padding: "8px 12px",
+            borderRadius: "6px",
+            fontSize: "13px",
+            pointerEvents: "none",
+            zIndex: 1000,
+          }}
+        >
+          <strong>Path:</strong> {hoveredNode.path}
+          <br />
+          <strong>Value:</strong>{" "}
+          {typeof hoveredNode.value === "object"
+            ? JSON.stringify(hoveredNode.value)
+            : hoveredNode.value?.toString()}
+        </div>
+      )}
     </div>
   );
 };
 
-const JsonTree = ({ data }) => {
-  return (
-    <ReactFlowProvider>
-      <JsonTreeInner data={data} />
-    </ReactFlowProvider>
-  );
-};
+const JsonTree = ({ data }) => (
+  <ReactFlowProvider>
+    <JsonTreeInner data={data} />
+  </ReactFlowProvider>
+);
 
 export default JsonTree;

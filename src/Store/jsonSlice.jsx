@@ -27,7 +27,7 @@ const jsonSlice = createSlice({
     setSearchPath: (state, action) => {
       state.searchPath = action.payload;
     },
-    // run JSONPath here and map to normalized ids
+  
     searchJsonPath: (state) => {
       if (!state.data || !state.searchPath) {
         state.matchedNodeIds = [];
@@ -39,7 +39,7 @@ const jsonSlice = createSlice({
         const result = JSONPath({
           path: state.searchPath,
           json: state.data,
-          resultType: "path", // we want paths
+          resultType: "path", 
         });
 
         if (result.length > 0) {
