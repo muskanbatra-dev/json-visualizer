@@ -15,7 +15,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
+import * as htmlToImage from "html-to-image";
 const normalizePathToId = (p) =>
   "root-" +
   p
@@ -29,7 +29,20 @@ const JsonTreeInner = ({ data }) => {
   const { setCenter } = useReactFlow();
   const matchedNodeIds = useSelector((s) => s.json.matchedNodeIds || []);
   const [hoveredNode, setHoveredNode] = useState(null);
-
+  const handleDownloadImage = async () => {
+    if (!reactFlowInstanceRef.current) return;
+    try {
+      const dataUrl = await htmlToImage.toPng(reactFlowInstanceRef.current);
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = "json-tree.png";
+      link.click();
+      toast.success("🖼️ JSON Tree downloaded as image!");
+    } catch (error) {
+      console.error("Error exporting image:", error);
+      toast.error("❌ Failed to download image.");
+    }
+  };
   const generateFlowElements = useCallback(
     (obj, parentId = null, level = 0, parentPath = "$") => {
       const nodes = [];
@@ -132,7 +145,6 @@ const JsonTreeInner = ({ data }) => {
     };
   }, [data, generateFlowElements]);
 
-
   const nodesWithHighlight = useMemo(() => {
     if (!matchedNodeIds || matchedNodeIds.length === 0) return nodes;
 
@@ -154,7 +166,6 @@ const JsonTreeInner = ({ data }) => {
     });
   }, [nodes, matchedNodeIds]);
 
- 
   useEffect(() => {
     if (!matchedNodeIds || matchedNodeIds.length === 0) return;
     const firstId = matchedNodeIds[0];
@@ -167,7 +178,6 @@ const JsonTreeInner = ({ data }) => {
     }
   }, [matchedNodeIds, nodes, setCenter]);
 
- 
   const handleNodeClick = (_, node) => {
     if (!node?.data?.path) return;
     navigator.clipboard.writeText(node.data.path);
@@ -176,27 +186,27 @@ const JsonTreeInner = ({ data }) => {
 
   return (
     <div style={{ height: "80vh", width: "100%", position: "relative" }}>
-      <ReactFlow
-        nodes={nodesWithHighlight}
-        edges={edges}
-        fitView
-        onNodeClick={handleNodeClick}
-        onNodeMouseEnter={(_, node) => setHoveredNode(node.data)}
-        onNodeMouseLeave={() => setHoveredNode(null)}
-      >
-        <MiniMap
-          nodeColor={(n) => {
-            if (n.style?.background === "#7B68EE") return "#7B68EE";
-            if (n.style?.background === "#2ECC71") return "#2ECC71";
-            if (n.style?.background === "#FFA500") return "#FFA500";
-            return "#1E90FF";
-          }}
-        />
-        <Controls />
-        <Background gap={16} color="#aaa" />
-      </ReactFlow>
-
-   
+      <div ref={reactFlowInstanceRef} style={{ height: "100%", width: "100%" }}>
+        <ReactFlow
+          nodes={nodesWithHighlight}
+          edges={edges}
+          fitView
+          onNodeClick={handleNodeClick}
+          onNodeMouseEnter={(_, node) => setHoveredNode(node.data)}
+          onNodeMouseLeave={() => setHoveredNode(null)}
+        >
+          <MiniMap
+            nodeColor={(n) => {
+              if (n.style?.background === "#7B68EE") return "#7B68EE";
+              if (n.style?.background === "#2ECC71") return "#2ECC71";
+              if (n.style?.background === "#FFA500") return "#FFA500";
+              return "#1E90FF";
+            }}
+          />
+          <Controls />
+          <Background gap={16} color="#aaa" />
+        </ReactFlow>
+      </div>
       {hoveredNode && (
         <div
           style={{
@@ -220,6 +230,24 @@ const JsonTreeInner = ({ data }) => {
             : hoveredNode.value?.toString()}
         </div>
       )}
+      <button
+        onClick={handleDownloadImage}
+        style={{
+          position: "absolute",
+          top: 1,
+          right: 1,
+          backgroundColor: "black",
+          color: "white",
+          border: "none",
+          borderRadius: "25px",
+          padding: "8px 12px",
+          cursor: "pointer",
+          fontSize: 14,
+          fontWeight: 800,
+        }}
+      >
+        ⬇️ Download Image
+      </button>
     </div>
   );
 };
