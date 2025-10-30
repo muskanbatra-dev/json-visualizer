@@ -34,5 +34,6 @@
 .clear-btn:disabled {
   background-color: #f3f4f6;
   cursor: not-allowed;
+  color: whitesmoke;
   opacity: 0.6;
 }

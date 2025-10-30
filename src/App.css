@@ -205,16 +205,14 @@ html {
   transition: background-color 0.3s ease;
 }
 
-.clear-btn:hover {
-  background: linear-gradient(90deg, #ff6b81, #ff4757);
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(255, 71, 87, 0.5);
-}
-.clear-btn:disabled {
+.clear-btn:disabled,
+.clear-btn:disabled:hover {
   opacity: 0.5;
   cursor: not-allowed;
   background-color: #d1d5db;
-  color: #000;
+  color: rgb(14, 13, 13);
+  transform: none;
+  box-shadow: none;
 }
 
 .button-group {
