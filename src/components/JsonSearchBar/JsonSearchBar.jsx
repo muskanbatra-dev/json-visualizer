@@ -6,6 +6,7 @@ import {
   clearSearch,
 } from "../../Store/jsonSlice";
 import { toast } from "react-toastify";
+import "./SearchBar.css"; 
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,6 @@ const SearchBar = () => {
     toast.info("Search cleared.", { position: "top-right" });
   };
 
- 
   useEffect(() => {
     if (!searchMessage) return;
 
@@ -73,29 +73,15 @@ const SearchBar = () => {
           border: "1px solid #ccc",
         }}
       />
-      <button
-        onClick={handleSearch}
-        style={{
-          padding: "8px 12px",
-          backgroundColor: "#2563eb",
-          color: "white",
-          border: "none",
-          borderRadius: 6,
-          cursor: "pointer",
-        }}
-      >
+
+      <button onClick={handleSearch} className="search-btn">
         Search
       </button>
+
       <button
         onClick={handleClear}
-        style={{
-          padding: "8px 12px",
-          backgroundColor: "#9ca3af",
-          color: "white",
-          border: "none",
-          borderRadius: 6,
-          cursor: "pointer",
-        }}
+        disabled={!localQuery.trim()}
+        className="clear-btn"
       >
         Clear
       </button>

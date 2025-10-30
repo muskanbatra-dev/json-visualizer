@@ -1,0 +1,35 @@
+.toggle-btn {
+  width: 50px;
+  height: 26px;
+  background-color: #ccc;
+  border: 2px solid #ccc;
+  border-radius: 99px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.toggle-btn .thumb {
+  height: 20px;
+  width: 20px;
+  background-color: #fff;
+  border-radius: 99px;
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  transition: left 0.15s ease;
+}
+
+.toggle-btn.toggled {
+  background-color: #007bff;
+  border-color: #2563eb;
+}
+
+.toggle-btn.toggled .thumb {
+  left: calc(50px - 25px);
+}
+
+.toggle-btn:hover {
+  border-color: #d1d5db;
+}

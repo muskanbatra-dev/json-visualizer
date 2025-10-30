@@ -1,4 +1,3 @@
-/* Container for the entire JSON Tree view */
 .json-tree-container {
   height: 80vh;
   width: 100%;
@@ -8,7 +7,6 @@
   overflow: hidden;
 }
 
-/* Zoom and Pan Controls (ReactFlow's Controls already included, but extra UI support) */
 .react-flow__controls {
   background: #fff !important;
   border-radius: 8px;
