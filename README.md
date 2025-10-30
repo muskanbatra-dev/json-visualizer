@@ -1,73 +1,140 @@
-# 🌳 JSON Tree Visualizer
+# JSON Tree Visualizer
 
-An **interactive JSON visualizer** built with React and React Flow.  
-Paste JSON, generate a color-coded graph, search using JSONPath, highlight matches, and export the visualization as an image.  
-Includes **light/dark themes**, hover insights, and copy-on-click actions.
+An interactive JSON visualizer built with **React** and **React Flow**. Paste JSON, generate a color-coded graph, search using JSONPath, highlight matches, and export the visualization as an image. Includes light/dark themes, hover insights, and copy-on-click actions.
 
 ---
 
-![JSON Tree Visualizer Demo](./demo.gif)  
-_(Add a short GIF or screenshot showing: paste → generate → search → download)_
+![JSON Tree Visualizer Demo](./demo.gif)
+
+> _Add a short GIF or screenshot showing: paste → generate → search → download_
 
 ---
 
-## 📽️ Demo Video
+## Demo Video
 
-<video src="./recording.mov" controls width="600">
-  Your browser does not support the video tag. [Download here](./recording.mov)
+If the embedded video doesn’t load, you can download or view it directly at `./recording.mov`.
+
+<video width="640" controls>
+  <source src="./recording.mov" type="video/mp4" />
+  Your browser does not support HTML video.
 </video>
 
 ---
 
-## ✨ Features
+## Features
 
-✅ **JSON input and validation**
+- **JSON Input and Validation**
 
-- Paste raw JSON and click **Generate Tree** to render instantly
-- Clear/reset to wipe both input and visualization
-- Toast notifications for errors and actions
+  - Paste raw JSON and click **Generate Tree** to render instantly.
+  - Clear/reset to wipe both input and visualization.
+  - Toast notifications for errors and actions.
 
-🌿 **Visual JSON Tree (React Flow powered)**
+- **Visual JSON Tree (React Flow)**
 
-- Root and nested nodes for objects, arrays, and primitives
-- Color coding:
-  - 🟣 Objects → **Purple**
-  - 🟢 Arrays → **Green**
-  - 🟠 Primitives → **Orange**
-- Includes MiniMap, zoom/pan Controls, and grid Background
+  - Root and nested nodes for objects, arrays, and primitives.
+  - Color coding:
 
-🔍 **JSONPath search and highlight**
+    - Objects → Purple
+    - Arrays → Green
+    - Primitives → Orange
 
-- Enter queries like:
-  - `$.user.address.city`
-  - `$..items[?(@.price>100)]`
-- Matches are highlighted and the first match auto-centers
-- Clear search resets highlights instantly
+  - Includes MiniMap, zoom/pan controls, and grid background.
 
-💡 **Node insights and quick actions**
+- **JSONPath Search and Highlight**
 
-- Hover a node → see its path and value snapshot
-- Click a node → copies the JSONPath to clipboard
+  - Enter queries like `$.user.address.city` or `$..items[?(@.price>100)]`.
+  - Matches are highlighted and the first match auto-centers.
+  - Clear search resets highlights instantly.
 
-🖼️ **Export as Image**
+- **Node Insights and Quick Actions**
 
-- One-click **Download Image** saves the current graph as PNG
+  - Hover a node to see its path and value snapshot.
+  - Click a node to copy its JSONPath to the clipboard.
 
-🌓 **Theme toggle**
+- **Export as Image**
 
-- Light/Dark mode toggle
-- Persisted via `localStorage` (applies to UI + toast notifications)
+  - One-click **Download Image** saves the current graph as a PNG file.
 
+- **Theme Toggle**
 
-## 🚀 Getting Started
+  - Light/Dark mode toggle.
+  - Theme preference persisted via `localStorage` (applies to UI and notifications).
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
-- Node.js **v18+**
+- Node.js v18 or higher
+- npm (bundled with Node) or yarn
 
-### Installation
+### Install
 
 ```bash
+# Install dependencies
 npm install
+# or
+# yarn
+# yarn install
+```
 
+### Run the App (development)
+
+```bash
+npm run dev
+# then open http://localhost:5173 in your browser
+```
+
+### Build for production
+
+```bash
+npm run build
+npm run preview
+```
+
+---
+
+## Try With This Dummy JSON
+
+Copy & paste the JSON below into the app input to see the tree visualization in action:
+
+```json
+{
+  "user": {
+    "id": 101,
+    "name": "Muskan",
+    "isActive": true,
+    "address": {
+      "city": "Bangalore",
+      "country": "India"
+    },
+    "skills": ["React", "Node.js"],
+    "project": {
+      "name": "ApiWiz",
+      "role": "Frontend Developer"
+    }
+  }
+}
+```
+
+---
+
+Example JSONPath Searches
+
+Here are some example queries you can try in the search bar:
+
+Basic Searches
+Description JSONPath Expected Match
+
+```json
+$.user.name	"Muskan"
+```
+
+```json
+$.user.isActive	true
+```
+
+```json
+$.user.address { "city": "Bangalore", "country": "India" }
 ```
