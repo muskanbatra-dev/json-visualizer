@@ -2,17 +2,9 @@
 
 An interactive JSON visualizer built with **React** and **React Flow**. Paste JSON, generate a color-coded graph, search using JSONPath, highlight matches, and export the visualization as an image. Includes light/dark themes, hover insights, and copy-on-click actions.
 
----
-
-![JSON Tree Visualizer Demo](./demo.gif)
-
-> _Add a short GIF or screenshot showing: paste → generate → search → download_
-
----
-
 ## Demo Video
 
-If the embedded video doesn’t load, you can download or view it directly at `./recording.mov`.
+If the embedded video doesn’t load, you can [download or view it directly here](./recording.mov).
 
 <video width="640" controls>
   <source src="./recording.mov" type="video/mp4" />
@@ -128,13 +120,13 @@ Basic Searches
 Description JSONPath Expected Match
 
 ```json
-$.user.name	"Muskan"
+$.user.name
 ```
 
 ```json
-$.user.isActive	true
+$.user.isActive
 ```
 
 ```json
-$.user.address { "city": "Bangalore", "country": "India" }
+$.user.address
 ```
