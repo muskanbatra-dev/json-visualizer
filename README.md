@@ -4,16 +4,21 @@ An interactive JSON visualizer built with **React** and **React Flow**. Paste JS
 
 ## Demo Video
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe 
-    src="https://www.loom.com/embed/03c5d4540e1f4312856005f391668fc0" 
-    frameborder="0" 
-    webkitallowfullscreen 
-    mozallowfullscreen 
-    allowfullscreen 
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-  </iframe>
+---
+
+<div align="center">
+  <a href="https://www.loom.com/share/03c5d4540e1f4312856005f391668fc0" target="_blank" style="text-decoration: none;">
+    <p><b>🗒️ Notes — 30 October 2025 — Watch Video</b></p>
+  </a>
+  <a href="https://www.loom.com/share/03c5d4540e1f4312856005f391668fc0" target="_blank">
+    <img 
+      src="https://cdn.loom.com/sessions/thumbnails/03c5d4540e1f4312856005f391668fc0-5efe9987eb3f9c32-full-play.gif" 
+      alt="Watch Loom Video" 
+      style="max-width: 400px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+  </a>
 </div>
+
+---
 
 ---
 
