@@ -7,9 +7,7 @@ An interactive JSON visualizer built with **React** and **React Flow**. Paste JS
 ---
 
 <div align="center">
-  <a href="https://www.loom.com/share/03c5d4540e1f4312856005f391668fc0" target="_blank" style="text-decoration: none;">
-    <p><b>🗒️ Notes — 30 October 2025 — Watch Video</b></p>
-  </a>
+ 
   <a href="https://www.loom.com/share/03c5d4540e1f4312856005f391668fc0" target="_blank">
     <img 
       src="https://cdn.loom.com/sessions/thumbnails/03c5d4540e1f4312856005f391668fc0-5efe9987eb3f9c32-full-play.gif" 
