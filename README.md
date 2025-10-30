@@ -4,7 +4,7 @@ An interactive JSON visualizer built with **React** and **React Flow**. Paste JS
 
 ## Demo Video
 
-If the embedded video doesn’t load, you can [download or view it directly here](./recording.mov).
+If the embedded video doesn’t load, you can download or view it directly at `./recording.mov`.
 
 <video width="640" controls>
   <source src="./recording.mov" type="video/mp4" />
