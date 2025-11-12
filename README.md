@@ -110,7 +110,7 @@ Copy & paste the JSON below into the app input to see the tree visualization in 
     },
     "skills": ["React", "Node.js"],
     "project": {
-      "name": "ApiWiz",
+      "name": "Visualizer Project",
       "role": "Frontend Developer"
     }
   }
